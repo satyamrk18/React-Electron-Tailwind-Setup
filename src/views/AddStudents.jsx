@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import Button from "./../components/Button.jsx"
+import Button from "./../components/Button.jsx";
 const AddStudent = () => {
   const [data, setData] = useState({
     name: "",
@@ -17,10 +17,11 @@ const AddStudent = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/addstudent`,
-        data,{
+        data,
+        {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("staffjwtauthenticationToken")}`,
-          }
+          },
         }
       );
 
@@ -39,7 +40,7 @@ const AddStudent = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100 py-10">
-      <Button goto="/" title="Home"/>
+      <Button goto="/students" title="Home" />
       <h1 className="text-3xl font-semibold mb-6 text-blue-700">Add Student</h1>
 
       <div className="bg-white w-full max-w-3xl rounded-2xl shadow-lg p-8">

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+    const navigate = useNavigate();
   return (
     <div className="w-full flex items-center justify-between p-4 bg-white shadow-md mb-6">
       <h1 className="text-2xl font-semibold mb-4">All Students</h1>
@@ -16,7 +17,7 @@ const Navbar = () => {
         onClick={() => {
           localStorage.removeItem("staff");
           localStorage.removeItem("staffjwtauthenticationToken");
-          window.location.href = "/stafflogin";
+          navigate("/");
         }}
       >
         Logout
