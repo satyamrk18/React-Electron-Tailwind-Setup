@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [staff, setStaff] = useState({ email: "", password: "" });
+  const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
   const LogIn = async () => {
     try {
@@ -11,7 +12,7 @@ const Home = () => {
         staff
       );
       if (response) {
-        alert("Log in Succesfully")
+        alert("Log in Succesfully");
         navigate("/students");
       } else {
         alert("Please enter valied email and password !");
@@ -39,15 +40,26 @@ const Home = () => {
         </div>
         <div className="flex flex-col">
           <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter Your Password"
-            className="border"
-            value={staff.password}
-            onChange={(e) => {
-              setStaff({ ...staff, password: e.target.value });
-            }}
-          />
+          <div className="flex flex-row gap-2">
+            <input
+              type={showPass ? "type" : "password"}
+              placeholder="Enter Your Password"
+              value={staff.password}
+              className="border"
+              onChange={(e) => {
+                setStaff({ ...staff, password: e.target.value });
+              }}
+            />
+            <button
+              type="button"
+              className="border w-16 text-center"
+              onClick={() => {
+                setShowPass(!showPass);
+              }}
+            >
+              {showPass ? "Hide" : "Show"}
+            </button>
+          </div>
         </div>
         <button
           className="border"
