@@ -1,10 +1,11 @@
 import React from "react";
-import Sample from "../components/Sample";
+import Navbar from "../components/Navbar";
+import axios from "axios"
 const Home = () => {
   return (
     <div>
-      <h1 className="text-green-700">Welcome to the Home Page</h1>
-      <Sample />
+      <Navbar />
+      <h1 className="text-green-700">All Students</h1>
     </div>
   );
 };
