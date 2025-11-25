@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Button from "./../components/Button.jsx";
+import Navbar from "../components/Navbar.jsx";
 const AddStudent = () => {
   const [data, setData] = useState({
     name: "",
@@ -40,7 +41,7 @@ const AddStudent = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100 py-10">
-      <Button goto="/students" title="Home" />
+      <Navbar />
       <h1 className="text-3xl font-semibold mb-6 text-blue-700">Add Student</h1>
 
       <div className="bg-white w-full max-w-3xl rounded-2xl shadow-lg p-8">

@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="w-full flex items-center justify-between p-4 bg-white shadow-md mb-6">
-      <h1 className="text-2xl font-semibold mb-4">All Students</h1>
+      <Link
+        to="/students"
+        className="bg-blue-500 p-1 rounded-xl text-white font-semibold cursor-pointer"
+      >
+        Home
+      </Link>
       <Link
         to="/addstudent"
         className="bg-green-500 p-1 rounded-xl text-white font-semibold cursor-pointer"
