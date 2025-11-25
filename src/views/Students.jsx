@@ -2,10 +2,10 @@ import Navbar from "./../components/Navbar";
 import Poster from "./../assets/college_poster.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom"
 const Students = () => {
   const [studentsData, setStudentsData] = useState([]);
-
+const navigate = useNavigate()
   // Getting the data from database
   const LoadData = async () => {
     try {
@@ -43,17 +43,51 @@ const Students = () => {
 
       <Navbar />
 
-      <div className="p-5">
-        {studentsData.length > 0 ? (
-          studentsData.map((studObj, index) => (
-            <div key={index} className="border p-2 my-2 rounded shadow">
-              <h2 className="text-lg font-semibold">{studObj.name}</h2>
-              <p className="text-sm text-gray-600">Roll No: {studObj.roll}</p>
-            </div>
-          ))
-        ) : (
-          <h1 className="text-center text-xl py-5">No Students Registered</h1>
-        )}
+      <div className="w-full">
+        <table className="w-full border-collapse bg-white shadow-sm rounded-xl overflow-hidden">
+          <thead className="bg-gray-100 text-left">
+            <tr>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                Roll No
+              </th>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                Name
+              </th>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                Year of Study
+              </th>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                Academic Year
+              </th>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                College ID
+              </th>
+              <th className="px-4 py-3 text-sm font-medium text-gray-700">
+                Aadhar No.
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {studentsData.map((s) => (
+              <tr
+                key={s.college_ID}
+                className="border-t cursor-pointer hover:bg-gray-100"
+                onClick={() => navigate(`/student/${s.slug}`)}
+              >
+                <td className="px-4 py-3 text-sm">{s.rollNo}</td>
+                <td className="px-4 py-3 text-sm">{s.name}</td>
+                <td className="px-4 py-3 text-sm">{s.year_of_study}</td>
+                <td className="px-4 py-3 text-sm">{s.year}</td>
+                <td className="px-4 py-3 text-sm">{s.college_ID}</td>
+                <td className="px-4 py-3 text-sm">{s.aadhaNo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* Display "Student not found" message */}
+        
       </div>
     </div>
   );
