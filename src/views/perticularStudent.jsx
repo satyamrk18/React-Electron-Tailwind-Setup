@@ -1,10 +1,137 @@
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const PerticularStudent = () => {
+  const [student, setStudent] = useState({});
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const loadStudent = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/student/${slug}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem(
+              "staffjwtauthenticationToken"
+            )}`,
+          },
+        }
+      );
+
+      setStudent(response.data.data);
+    } catch (error) {
+      alert("Something went wrong, please try again later.");
+    }
+  };
+
+  useEffect(() => {
+    loadStudent();
+  }, [slug]); // load whenever slug changes
+
+  //delete student
+  const DeleteStudent = async () => {
+    try {
+      if (confirm("Are you sure you want to delete this student?") == true) {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_API_URL}/student/delete/${slug}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem(
+                "staffjwtauthenticationToken"
+              )}`,
+            },
+          }
+        );
+
+        navigate("/students");
+      } else {
+        return;
+      }
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  };
   return (
-    <div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <Navbar />
-      <h1>perticular student</h1>
+      <div className="max-w-xl w-full bg-white shadow-xl rounded-2xl p-6 border">
+        <h2 className="text-xl font-semibold mb-4 text-center text-gray-800 border-b pb-2">
+          Student Details
+        </h2>
+
+        <div className="grid grid-cols-2 gap-4 text-gray-700">
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Name</p>
+            <p className="text-base">{student?.name}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Father's Name</p>
+            <p className="text-base">{student?.father_name}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Mother's Name</p>
+            <p className="text-base">{student?.mother_name}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Address</p>
+            <p className="text-base">{student?.address}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Roll No</p>
+            <p className="text-base">{student?.rollNo}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Year of Study</p>
+            <p className="text-base">{student?.year_of_study}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Branch</p>
+            <p className="text-base">{student?.branch}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Aadhar No</p>
+            <p className="text-base">{student?.aadhaNo}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">Year</p>
+            <p className="text-base">{student?.year}</p>
+          </div>
+
+          <div>
+            <p className="font-medium text-gray-500 text-sm">College ID</p>
+            <p className="text-base">{student?.college_ID}</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex w-full items-center justify-center gap-10 mt-10">
+        <Link
+          to={`/student/edit/${slug}`}
+          className="p-0.5 w-[85px] flex items-center justify-center rounded-lg font-semibold bg-green-600 text-white cursor-pointer hover:bg-green-500 hover:text-black"
+        >
+          Edit
+        </Link>
+        <Link
+          className="p-0.5 w-[85px] rounded-lg font-semibold flex items-center justify-center bg-red-600 text-white cursor-pointer hover:bg-red-500 hover:text-black"
+          onClick={() => {
+            DeleteStudent();
+          }}
+        >
+          Delete
+        </Link>
+      </div>
     </div>
   );
 };
+
 export default PerticularStudent;
